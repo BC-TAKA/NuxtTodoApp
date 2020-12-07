@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/raveger/VueTODO/ToDo/model"
+	"github.com/raveger/NuxtTodoApp/backend/model"
 )
 
 func GetTODOs(DB *sql.DB) []model.Listup {

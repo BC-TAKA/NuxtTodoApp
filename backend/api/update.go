@@ -3,7 +3,7 @@ package api
 import (
 	"database/sql"
 
-	"github.com/raveger/VueTODO/ToDo/model"
+	"github.com/raveger/NuxtTodoApp/backend/model"
 )
 
 func UpdateTODO(todo model.TODO, DB *sql.DB) error {
