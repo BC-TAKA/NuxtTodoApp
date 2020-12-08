@@ -41,9 +41,6 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
   ],
-  proxy: {
-    'http://localhost:8081/todos': (environment === 'development') ? 'http://localhost:3000' : 'http://localhost:8081/todos'
-  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},

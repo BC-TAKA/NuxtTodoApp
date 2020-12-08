@@ -103,14 +103,15 @@
 
 <script>
 export default {
-  async asyncData(app) {
-    const data = await app.$axios.$get('/todos')
+  data() {
     return {
-    data,
-    todos: [],
-    createTodoForm: {},
-    updateTodoForm: {},
+      todos: [],
+      createTodoForm: {},
+      updateTodoForm: {},
     };
+  },
+  created() {
+    this.getTODOs()
   },
   methods: {
     //一覧表示機能
