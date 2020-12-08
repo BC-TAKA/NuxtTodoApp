@@ -10,18 +10,21 @@
                 Name
                 <v-text-field
                 label="件名を入力"
+                v-model="createTodoForm.name"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
                 Todo
                 <v-text-field
                 label="内容を入力"
+                v-model="createTodoForm.todo"
                 >
                   <template v-slot:append-outer>
                     <v-btn
                       dark
                       rounded
                       color="red"
+                      v-on:click="doAdd"
                     >新規登録</v-btn>
                   </template>
                 </v-text-field>
@@ -38,24 +41,28 @@
                 ID
                 <v-text-field
                   label="IDを入力"
+                  v-model="updateTodoForm.id"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="4">
                 Name
                 <v-text-field
                   label="件名を入力"
+                  v-model="updateTodoForm.name"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="7">
                 Todo
                 <v-text-field
                 label="内容を入力"
+                v-model="updateTodoForm.todo"
                 >
                   <template v-slot:append-outer>
                     <v-btn
                       dark
                       rounded
                       color="blue"
+                      v-on:click="doUpdate"
                     >内容を更新</v-btn>
                   </template>
                 </v-text-field>
@@ -74,14 +81,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>No.1</td>
-                <td>sample</td>
-                <td>samplecase</td>
+              <tr v-for="todo in todos" v-bind:key="todo.id">
+                <td>No.{{ todo.ID }}</td>
+                <td>{{ todo.Name }}</td>
+                <td>{{ todo.Todo }}</td>
                 <td>
                   <v-btn
                     dark
-                    rounded 
+                    rounded
+                    v-on:click="doRemove(todo)"
                   >削除</v-btn>
                 </td>
               </tr>
@@ -95,12 +103,57 @@
 
 <script>
 export default {
-  data: function() {
+  async asyncData(app) {
+    const data = await app.$axios.$get('/todos')
     return {
-      todos: [],
-      createTodoForm: {},
-      updateTodoForm: {},
+    data,
+    todos: [],
+    createTodoForm: {},
+    updateTodoForm: {},
     };
   },
+  methods: {
+    //一覧表示機能
+    getTODOs() {
+        axios.get('http://localhost:8081/todos')
+        .then((response) => {
+            this.todos = response.data
+        }).catch((error) => {
+            console.log(error);
+        })
+    },
+    //新規登録機能
+    doAdd() {
+        axios.post('http://localhost:8081/todos', this.createTodoForm)
+        .then((response) => {
+            alert("登録完了しました。")
+            this.getTODOs()
+            this.createTodoForm = {}
+        }).catch((error) => {
+            console.log(error);
+        })
+    },
+    //更新機能
+    doUpdate() {
+        axios.put('http://localhost:8081/todos', this.updateTodoForm)
+        .then((response) => {
+            alert("更新が完了しました。")
+            this.getTODOs()
+            this.updateTodoForm = {}
+        }).catch((error) => {
+            console.log(error);
+        })
+    },
+    //削除機能
+    doRemove(todo) {
+        const id = todo.ID
+        axios.delete(`http://localhost:8081/todos?id=${id}`)
+        .then((response) => {
+            this.getTODOs()
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+  }
 }
 </script>
