@@ -63,17 +63,19 @@ func getTODOs(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func rootHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Headers", "*")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-}
+// func rootHandler(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Access-Control-Allow-Headers", "*")
+// 	w.Header().Set("Access-Control-Allow-Origin", "*")
+// 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+// }
 
 func main() {
 	DB = common.DbConn()
 	http.Handle("/", http.FileServer(http.Dir(".")))
-	http.HandleFunc("/todos", rootHandler)
 	http.HandleFunc("/todos", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Headers", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		switch r.Method {
 		case http.MethodGet:
 			getTODOs(w, r)
