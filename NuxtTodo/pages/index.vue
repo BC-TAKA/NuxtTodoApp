@@ -125,7 +125,7 @@ export default {
     },
     //新規登録機能
     doAdd() {
-        axios.post('http://localhost:8081/todos', this.createTodoForm)
+        this.$axios.post('http://localhost:8081/todos', this.createTodoForm)
         .then((response) => {
             alert("登録完了しました。")
             this.getTODOs()
@@ -136,7 +136,7 @@ export default {
     },
     //更新機能
     doUpdate() {
-        axios.put('http://localhost:8081/todos', this.updateTodoForm)
+        this.$axios.put('http://localhost:8081/todos', this.updateTodoForm)
         .then((response) => {
             alert("更新が完了しました。")
             this.getTODOs()
@@ -148,7 +148,7 @@ export default {
     //削除機能
     doRemove(todo) {
         const id = todo.ID
-        axios.delete(`http://localhost:8081/todos?id=${id}`)
+        this.$axios.delete(`http://localhost:8081/todos?id=${id}`)
         .then((response) => {
             this.getTODOs()
         }).catch((error) => {
