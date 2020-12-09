@@ -116,7 +116,7 @@ export default {
   methods: {
     //一覧表示機能
     getTODOs() {
-        axios.get('http://localhost:8081/todos')
+        this.$axios.get('http://localhost:8081/todos')
         .then((response) => {
             this.todos = response.data
         }).catch((error) => {
