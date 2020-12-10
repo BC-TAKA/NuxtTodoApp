@@ -101,7 +101,7 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data() {
     return {
@@ -147,7 +147,7 @@ export default {
     },
     //削除機能
     doRemove(todo) {
-        const id = todo.ID
+        const id = todo.ID;
         this.$axios.delete(`http://localhost:8081/todos?id=${id}`)
         .then((response) => {
             this.getTODOs()
