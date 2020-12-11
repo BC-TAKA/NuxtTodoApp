@@ -102,18 +102,47 @@
 </template>
 
 <script lang="ts">
+// 継承用のインターフェース
+interface baseTodoType {
+  name: string;
+  todo: string;
+}
+
+// 一覧取得用のインターフェース
+interface getTodosType extends baseTodoType {
+  ID: number;
+}
+
+// 新規登録用のインターフェース
+interface createTodoType extends baseTodoType {}
+
+// 更新用のインターフェース
+interface updateTodoType extends baseTodoType{
+  ID: number;
+}
+
+// 削除用のインターフェース
+interface deleteTodoType extends baseTodoType{
+  ID: number;
+}
+
+// responseのインターフェース
+interface responseType {
+  response: string;
+}
+
+// キャッチするerrorのインターフェース
+interface catchErrorType {
+  error: string;
+}
+
 export default {
   data() {
     return {
       todos: [],
-      createTodoForm: {},
-      updateTodoForm: {},
+      createTodoForm: {} as createTodoType,
+      updateTodoForm: {} as updateTodoType,
     };
-    // 新規登録用のインターフェース
-    interface createTodoType {
-      name: string;
-      todo: string;
-    }
   },
   created() {
     this.getTODOs()
@@ -122,41 +151,41 @@ export default {
     //一覧表示機能
     getTODOs() {
         this.$axios.get('http://localhost:8081/todos')
-        .then((response) => {
-            this.todos = response.data
-        }).catch((error) => {
+        .then((response: any) => {
+            this.todos = response.data as getTodosType
+        }).catch((error: catchErrorType) => {
             console.log(error);
         })
     },
     //新規登録機能
     doAdd() {
-        this.$axios.post('http://localhost:8081/todos', this.createTodoForm: createTodoType)
-        .then((response) => {
+        this.$axios.post('http://localhost:8081/todos', this.createTodoForm)
+        .then((response: any) => {
             alert("登録完了しました。")
             this.getTODOs()
-            this.createTodoForm = {}
-        }).catch((error) => {
+            this.createTodoForm  = {}
+        }).catch((error: catchErrorType) => {
             console.log(error);
         })
     },
     //更新機能
     doUpdate() {
         this.$axios.put('http://localhost:8081/todos', this.updateTodoForm)
-        .then((response) => {
+        .then((response: any) => {
             alert("更新が完了しました。")
             this.getTODOs()
             this.updateTodoForm = {}
-        }).catch((error) => {
+        }).catch((error: catchErrorType) => {
             console.log(error);
         })
     },
     //削除機能
-    doRemove(todo: number) {
+    doRemove(todo: deleteTodoType) {
         const id = todo.ID;
         this.$axios.delete(`http://localhost:8081/todos?id=${id}`)
-        .then((response) => {
+        .then((response: any) => {
             this.getTODOs()
-        }).catch((error) => {
+        }).catch((error: catchErrorType) => {
             console.log(error);
         })
     }
