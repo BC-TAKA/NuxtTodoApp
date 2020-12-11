@@ -109,6 +109,11 @@ export default {
       createTodoForm: {},
       updateTodoForm: {},
     };
+    // 新規登録用のインターフェース
+    interface createTodoType {
+      name: string;
+      todo: string;
+    }
   },
   created() {
     this.getTODOs()
@@ -125,7 +130,7 @@ export default {
     },
     //新規登録機能
     doAdd() {
-        this.$axios.post('http://localhost:8081/todos', this.createTodoForm)
+        this.$axios.post('http://localhost:8081/todos', this.createTodoForm: createTodoType)
         .then((response) => {
             alert("登録完了しました。")
             this.getTODOs()
@@ -146,7 +151,7 @@ export default {
         })
     },
     //削除機能
-    doRemove(todo) {
+    doRemove(todo: number) {
         const id = todo.ID;
         this.$axios.delete(`http://localhost:8081/todos?id=${id}`)
         .then((response) => {
