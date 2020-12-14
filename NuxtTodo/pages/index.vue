@@ -102,6 +102,9 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue'
+import axios from 'axios'
+
 // 継承用のインターフェース
 interface baseTodoType {
   name: string;
@@ -136,7 +139,7 @@ interface catchErrorType {
   error: string;
 }
 
-export default {
+export default Vue.extend ({
   data() {
     return {
       todos: [],
@@ -150,7 +153,7 @@ export default {
   methods: {
     //一覧表示機能
     getTODOs() {
-        this.$axios.get('http://localhost:8081/todos')
+        axios.get('http://localhost:8081/todos')
         .then((response: any) => {
             this.todos = response.data as getTodosType
         }).catch((error: catchErrorType) => {
@@ -159,7 +162,7 @@ export default {
     },
     //新規登録機能
     doAdd() {
-        this.$axios.post('http://localhost:8081/todos', this.createTodoForm)
+        axios.post('http://localhost:8081/todos', this.createTodoForm)
         .then((response: any) => {
             alert("登録完了しました。")
             this.getTODOs()
@@ -170,7 +173,7 @@ export default {
     },
     //更新機能
     doUpdate() {
-        this.$axios.put('http://localhost:8081/todos', this.updateTodoForm)
+        axios.put('http://localhost:8081/todos', this.updateTodoForm)
         .then((response: any) => {
             alert("更新が完了しました。")
             this.getTODOs()
@@ -182,7 +185,7 @@ export default {
     //削除機能
     doRemove(todo: deleteTodoType) {
         const id = todo.ID;
-        this.$axios.delete(`http://localhost:8081/todos?id=${id}`)
+        axios.delete(`http://localhost:8081/todos?id=${id}`)
         .then((response: any) => {
             this.getTODOs()
         }).catch((error: catchErrorType) => {
@@ -190,5 +193,5 @@ export default {
         })
     }
   }
-}
+})
 </script>
