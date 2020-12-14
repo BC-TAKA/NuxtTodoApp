@@ -155,7 +155,7 @@ export default Vue.extend ({
     getTODOs() {
         axios.get('http://localhost:8081/todos')
         .then((response: any) => {
-            this.todos = response.data as getTodosType
+            this.todos.getTodosType[] = response.data as getTodosType
         }).catch((error: catchErrorType) => {
             console.log(error);
         })
@@ -166,7 +166,7 @@ export default Vue.extend ({
         .then((response: any) => {
             alert("登録完了しました。")
             this.getTODOs()
-            this.createTodoForm  = {}
+            this.createTodoForm = {} as createTodoType
         }).catch((error: catchErrorType) => {
             console.log(error);
         })
@@ -177,7 +177,7 @@ export default Vue.extend ({
         .then((response: any) => {
             alert("更新が完了しました。")
             this.getTODOs()
-            this.updateTodoForm = {}
+            this.updateTodoForm = {} as updateTodoType
         }).catch((error: catchErrorType) => {
             console.log(error);
         })
