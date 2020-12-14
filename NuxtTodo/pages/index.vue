@@ -142,7 +142,7 @@ interface catchErrorType {
 export default Vue.extend ({
   data() {
     return {
-      todos: [],
+      todos: [] as getTodosType[],
       createTodoForm: {} as createTodoType,
       updateTodoForm: {} as updateTodoType,
     };
@@ -155,7 +155,8 @@ export default Vue.extend ({
     getTODOs() {
         axios.get('http://localhost:8081/todos')
         .then((response: any) => {
-            this.todos.getTodosType[] = response.data as getTodosType
+            this.todos = response.data as getTodosType[]
+            return this.todos
         }).catch((error: catchErrorType) => {
             console.log(error);
         })
