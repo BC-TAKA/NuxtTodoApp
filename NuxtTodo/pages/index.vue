@@ -89,7 +89,7 @@
                   <v-btn
                     dark
                     rounded
-                    v-on:click="doRemove(todo)"
+                    v-on:click="doRemove(todo.ID)"
                   >削除</v-btn>
                 </td>
               </tr>
@@ -105,46 +105,19 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-// 継承用のインターフェース
-interface baseTodoType {
+// インターフェース
+interface TodoType {
+  id?: number;
   name: string;
   todo: string;
-}
-
-// 一覧取得用のインターフェース
-interface getTodosType extends baseTodoType {
-  ID: number;
-}
-
-// 新規登録用のインターフェース
-interface createTodoType extends baseTodoType {}
-
-// 更新用のインターフェース
-interface updateTodoType extends baseTodoType{
-  ID: number;
-}
-
-// 削除用のインターフェース
-interface deleteTodoType extends baseTodoType{
-  ID: number;
-}
-
-// responseのインターフェース
-interface responseType {
-  response: string;
-}
-
-// キャッチするerrorのインターフェース
-interface catchErrorType {
-  error: string;
 }
 
 export default Vue.extend ({
   data() {
     return {
-      todos: [] as getTodosType[],
-      createTodoForm: {} as createTodoType,
-      updateTodoForm: {} as updateTodoType,
+      todos: [] as TodoType[],
+      createTodoForm: {} as TodoType,
+      updateTodoForm: {} as TodoType,
     };
   },
   created() {
@@ -155,9 +128,9 @@ export default Vue.extend ({
     getTODOs() {
         axios.get('http://localhost:8081/todos')
         .then((response: any) => {
-            this.todos = response.data as getTodosType[]
+            this.todos = response.data as TodoType[]
             return this.todos
-        }).catch((error: catchErrorType) => {
+        }).catch((error: any) => {
             console.log(error);
         })
     },
@@ -167,8 +140,8 @@ export default Vue.extend ({
         .then((response: any) => {
             alert("登録完了しました。")
             this.getTODOs()
-            this.createTodoForm = {} as createTodoType
-        }).catch((error: catchErrorType) => {
+            this.createTodoForm = {} as TodoType
+        }).catch((error: any) => {
             console.log(error);
         })
     },
@@ -178,18 +151,18 @@ export default Vue.extend ({
         .then((response: any) => {
             alert("更新が完了しました。")
             this.getTODOs()
-            this.updateTodoForm = {} as updateTodoType
-        }).catch((error: catchErrorType) => {
+            this.updateTodoForm = {} as TodoType
+        }).catch((error: any) => {
             console.log(error);
         })
     },
     //削除機能
-    doRemove(todo: deleteTodoType) {
-        const id = todo.ID;
-        axios.delete(`http://localhost:8081/todos?id=${id}`)
+    doRemove(ID: number) {
+        // const id = todo.ID;
+        axios.delete(`http://localhost:8081/todos?id=${ID}`)
         .then((response: any) => {
             this.getTODOs()
-        }).catch((error: catchErrorType) => {
+        }).catch((error: any) => {
             console.log(error);
         })
     }
