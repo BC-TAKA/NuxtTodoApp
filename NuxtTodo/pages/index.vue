@@ -89,7 +89,7 @@
                   <v-btn
                     dark
                     rounded
-                    v-on:click="doRemove(todo)"
+                    v-on:click="doRemove(todo.ID)"
                   >削除</v-btn>
                 </td>
               </tr>
@@ -101,13 +101,23 @@
   </section>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import axios from 'axios'
+
+// インターフェース
+interface TodoType {
+  id?: number;
+  name: string;
+  todo: string;
+}
+
+export default Vue.extend ({
   data() {
     return {
-      todos: [],
-      createTodoForm: {},
-      updateTodoForm: {},
+      todos: [] as TodoType[],
+      createTodoForm: {} as TodoType,
+      updateTodoForm: {} as TodoType,
     };
   },
   created() {
@@ -116,45 +126,45 @@ export default {
   methods: {
     //一覧表示機能
     getTODOs() {
-        this.$axios.get('http://localhost:8081/todos')
-        .then((response) => {
-            this.todos = response.data
-        }).catch((error) => {
+        axios.get('http://localhost:8081/todos')
+        .then((response: any) => {
+            this.todos = response.data as TodoType[]
+            return this.todos
+        }).catch((error: any) => {
             console.log(error);
         })
     },
     //新規登録機能
     doAdd() {
         axios.post('http://localhost:8081/todos', this.createTodoForm)
-        .then((response) => {
+        .then((response: any) => {
             alert("登録完了しました。")
             this.getTODOs()
-            this.createTodoForm = {}
-        }).catch((error) => {
+            this.createTodoForm = {} as TodoType
+        }).catch((error: any) => {
             console.log(error);
         })
     },
     //更新機能
     doUpdate() {
         axios.put('http://localhost:8081/todos', this.updateTodoForm)
-        .then((response) => {
+        .then((response: any) => {
             alert("更新が完了しました。")
             this.getTODOs()
-            this.updateTodoForm = {}
-        }).catch((error) => {
+            this.updateTodoForm = {} as TodoType
+        }).catch((error: any) => {
             console.log(error);
         })
     },
     //削除機能
-    doRemove(todo) {
-        const id = todo.ID
-        axios.delete(`http://localhost:8081/todos?id=${id}`)
-        .then((response) => {
+    doRemove(ID: number) {
+        axios.delete(`http://localhost:8081/todos?id=${ID}`)
+        .then((response: any) => {
             this.getTODOs()
-        }).catch((error) => {
+        }).catch((error: any) => {
             console.log(error);
         })
     }
   }
-}
+})
 </script>
