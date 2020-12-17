@@ -1,6 +1,6 @@
 package model
 
-type Listup struct {
+type User struct {
 	ID   int
 	Name string
 	Todo string
