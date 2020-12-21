@@ -37,7 +37,7 @@ func (u *userHandler) Users(c echo.Context) error {
 	}
 	id, err := strconv.Atoi(paramID)
 	if err != nil {
-		err = errors.Wrap(ErrUserIDIsNotNumber, "Invalid user id")
+		err = errors.Wrap(err, "Invalid user id")
 		log.Println(err)
 		return c.JSON(http.StatusBadRequest, NewErrorResponse(err))
 	}
