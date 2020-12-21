@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"log"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo"
 	"github.com/raveger/NuxtTodoApp/backend/domain/service"
 	"github.com/raveger/NuxtTodoApp/backend/infra"
+	"xorm.io/xorm"
 )
 
 type ErrorResponse struct {
-	Message string `json:"message"`
+	Message string `xorm:"message"`
 }
 
 func main() {
@@ -22,11 +24,11 @@ func main() {
 	e := echo.New()
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=true&loc=Asia%%2FTokyo",
 		config.DB.ID, config.DB.Password, config.DB.Host, config.DB.Port, config.DB.DB)
-	db, err := xorm.engine("mysql", dsn)
+	engine, err := xorm.NewEngine("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
 	}
-	userRepo := infra.NewUser(db)
+	userRepo := infra.NewUser(engine)
 	userService := service.NewUser(userRepo)
 	h := handler.NewHandler(userService)
 	server := server.New(e).RegistHandler(h)

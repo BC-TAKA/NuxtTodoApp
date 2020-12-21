@@ -6,9 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"errors"
-
 	"github.com/labstack/echo"
+	"github.com/pkg/errors"
 	"github.com/raveger/NuxtTodoApp/backend/domain/service"
 )
 
@@ -16,7 +15,7 @@ type UserHandler interface {
 	Users(c echo.Context) error
 }
 
-type UserHandler struct {
+type userHandler struct {
 	user service.User
 }
 

@@ -5,20 +5,21 @@ import (
 
 	"github.com/raveger/NuxtTodoApp/backend/domain/model"
 	"github.com/raveger/NuxtTodoApp/backend/domain/repo"
+	"xorm.io/xorm"
 )
 
 type user struct {
-	db *xorm.DB
+	engine *xorm.Engine
 }
 
-func NewUser(db *xorm.DB) repo.User {
-	return &user{db: db}
+func NewUser(engine *xorm.Engine) repo.User {
+	return &user{engine: engine}
 }
 
 func (u *user) Users() ([]model.User, error) {
 	users := []model.User{}
 
-	if err := u.db.Find(&users).Error; err != nil {
+	if err := u.engine.Find(&users).Error; err != nil {
 		log.Println(err)
 		return nil, err
 	}
@@ -29,7 +30,7 @@ func (u *user) User(id int) (*model.User, error) {
 	user := model.User{
 		ID: id,
 	}
-	if err := u.db.Find(&user).Error; err != nil {
+	if err := u.engine.Find(&user).Error; err != nil {
 		log.Println(err)
 		return nil, err
 	}
