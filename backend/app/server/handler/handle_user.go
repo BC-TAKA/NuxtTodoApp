@@ -19,6 +19,12 @@ type userHandler struct {
 	user service.User
 }
 
+func NewErrorResponse(err error) ErrorResponse {
+	return ErrorResponse{
+		Message: err.Error(),
+	}
+}
+
 func NewUserHandler(user service.User) UserHandler {
 	return &userHandler{user: user}
 }
