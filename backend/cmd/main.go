@@ -14,10 +14,6 @@ import (
 	"xorm.io/xorm"
 )
 
-type ErrorResponse struct {
-	Message string `xorm:"message"`
-}
-
 func main() {
 	var err error
 	config, err := config.Readconfig()
@@ -33,7 +29,7 @@ func main() {
 	}
 	userRepo := infra.NewUser(engine)
 	userService := service.NewUser(userRepo)
-	h := handler.NewHandler(userService)
+	h := handler.NewUserHandler(userService)
 	server := server.New(e).RegistHandler(h)
 
 	log.Fatal(server.Start())

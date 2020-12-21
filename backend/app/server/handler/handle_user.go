@@ -19,6 +19,10 @@ type userHandler struct {
 	user service.User
 }
 
+type ErrorResponse struct {
+	Message string `xorm:"message"`
+}
+
 func NewErrorResponse(err error) ErrorResponse {
 	return ErrorResponse{
 		Message: err.Error(),
