@@ -6,8 +6,10 @@ import (
 	"net/http"
 	"strconv"
 
+	"errors"
+
+	"github.com/labstack/echo"
 	"github.com/raveger/NuxtTodoApp/backend/domain/service"
-	"github.com/pkg/errors"
 )
 
 type UserHandler interface {
@@ -19,11 +21,12 @@ type UserHandler struct {
 }
 
 func NewUserHandler(user service.User) UserHandler {
-	return &userHandler(user: user)
+	return &userHandler{user: user}
 }
 
 func (u *userHandler) Users(c echo.Context) error {
 	paramID := c.QueryParam("id")
+
 	if paramID == "" {
 		users, err := u.user.Users()
 		if err != nil {

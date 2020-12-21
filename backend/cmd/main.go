@@ -1,10 +1,10 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 
+	"github.com/labstack/echo"
 	"github.com/raveger/NuxtTodoApp/backend/domain/service"
 	"github.com/raveger/NuxtTodoApp/backend/infra"
 )
@@ -22,7 +22,7 @@ func main() {
 	e := echo.New()
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=true&loc=Asia%%2FTokyo",
 		config.DB.ID, config.DB.Password, config.DB.Host, config.DB.Port, config.DB.DB)
-	db, err := sql.Open("mysql", dsn)
+	db, err := xorm.engine("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
 	}
