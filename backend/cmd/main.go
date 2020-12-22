@@ -30,5 +30,7 @@ func main() {
 	userService := service.NewUser(userRepo)
 	h := handler.NewUserHandler(userService)
 
+	router := httprouter.New()
+
 	e.Start()
 }
