@@ -16,10 +16,10 @@ import (
 
 func main() {
 	var err error
-	config := config.Readconfig()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	config, err := config.Readconfig()
+	if err != nil {
+		log.Fatal(err)
+	}
 	e := echo.New()
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=true&loc=Asia%%2FTokyo",
 		config.DB.ID, config.DB.Password, config.DB.Host, config.DB.Port, config.DB.DB)

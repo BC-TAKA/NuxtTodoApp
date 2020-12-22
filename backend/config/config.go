@@ -1,19 +1,27 @@
 package config
 
-type DB struct {
+type DBConfig struct {
 	ID       string
 	Password string
 	Host     string
-	Port     string
+	Port     int
 	DB       string
 }
 
-func Readconfig() DB {
-	var d DB
-	d.ID = "a1"
-	d.Password = "a2"
-	d.Host = "a3"
-	d.Port = "a4"
-	d.DB = "a5"
-	return d
+type Config struct {
+	DB DBConfig
+}
+
+func Readconfig() (Config, error) {
+	conf := Config{}
+
+	conf.DB = DBConfig{
+		ID:       "sample_id",
+		Password: "sample_pass",
+		Host:     "sample_host",
+		Port:     3306,
+		DB:       "todolist",
+	}
+
+	return conf, nil
 }
