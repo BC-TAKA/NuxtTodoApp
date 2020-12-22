@@ -12,7 +12,7 @@ import (
 )
 
 type UserHandler interface {
-	Users(c echo.Context) error
+	Users(c echo.Context, httprouter.Params) error
 }
 
 type userHandler struct {
@@ -33,7 +33,7 @@ func NewUserHandler(user service.User) UserHandler {
 	return &userHandler{user: user}
 }
 
-func (u *userHandler) Users(c echo.Context) error {
+func (u *userHandler) Users(c echo.Context, pr httprouter.Params) error {
 	paramID := c.QueryParam("id")
 
 	if paramID == "" {

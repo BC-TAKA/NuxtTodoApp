@@ -6,7 +6,6 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo"
-	"github.com/raveger/NuxtTodoApp/backend/app/server"
 	"github.com/raveger/NuxtTodoApp/backend/app/server/handler"
 	"github.com/raveger/NuxtTodoApp/backend/config"
 	"github.com/raveger/NuxtTodoApp/backend/domain/service"
@@ -30,7 +29,6 @@ func main() {
 	userRepo := infra.NewUser(engine)
 	userService := service.NewUser(userRepo)
 	h := handler.NewUserHandler(userService)
-	server := server.New(e).RegistHandler(h)
 
-	log.Fatal(server.Start())
+	e.Start()
 }

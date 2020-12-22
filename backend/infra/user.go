@@ -36,3 +36,13 @@ func (u *user) User(id int) (*model.User, error) {
 	}
 	return &user, nil
 }
+
+// DELETE用
+func (u *user) Delete(id int) (err error) {
+	err = u.engine.ID(id).Delete(&user)
+
+	if err != nil {
+		log.Println(err)
+	}
+	return
+}
