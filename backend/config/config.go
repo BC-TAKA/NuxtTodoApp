@@ -16,11 +16,11 @@ func Readconfig() (Config, error) {
 	conf := Config{}
 
 	conf.DB = DBConfig{
-		ID:       "sample_id",
-		Password: "sample_pass",
-		Host:     "sample_host",
+		ID:       "root",
+		Password: "",
+		Host:     "127.0.0.1",
 		Port:     3306,
-		DB:       "todolist",
+		DB:       "todo",
 	}
 
 	return conf, nil
