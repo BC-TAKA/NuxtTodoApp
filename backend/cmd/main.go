@@ -34,13 +34,14 @@ func main() {
 
 	e := echo.New()
 
+	// e.Use(middleware.CORS())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"https://labstack.com", "https://labstack.net"},
 		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
 	}))
 
 	// ここから下にルーティング記載
-	e.GET("/todo", h.Users)
+	e.GET("/todos", h.Users)
 
 	e.Start(":8081")
 }
