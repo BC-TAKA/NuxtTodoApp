@@ -4,7 +4,7 @@ type DBConfig struct {
 	ID       string
 	Password string
 	Host     string
-	Port     int
+	Port     string
 	DB       string
 }
 
@@ -19,7 +19,7 @@ func Readconfig() (Config, error) {
 		ID:       "root",
 		Password: "",
 		Host:     "127.0.0.1",
-		Port:     3306,
+		Port:     "3306",
 		DB:       "todo",
 	}
 
