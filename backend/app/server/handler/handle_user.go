@@ -59,3 +59,8 @@ func (u *userHandler) Users(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, user)
 }
+
+// DELETE用
+func (u *userHandler) Delete(c echo.Context) error {
+
+}

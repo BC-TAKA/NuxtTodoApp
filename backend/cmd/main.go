@@ -41,6 +41,7 @@ func main() {
 
 	// ここから下にルーティング記載
 	e.GET("/todos", h.Users)
+	e.DELETE("/todos", h.Delete)
 
 	e.Start(":8081")
 }
