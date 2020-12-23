@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"github.com/raveger/NuxtTodoApp/backend/app/server/handler"
 	"github.com/raveger/NuxtTodoApp/backend/config"
 	"github.com/raveger/NuxtTodoApp/backend/domain/service"
@@ -30,8 +32,14 @@ func main() {
 	userService := service.NewUser(userRepo)
 	h := handler.NewUserHandler(userService)
 
-	// ここから下にルーティング記載
 	e := echo.New()
+
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"https://labstack.com", "https://labstack.net"},
+		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
+	}))
+
+	// ここから下にルーティング記載
 	e.GET("/todo", h.Users)
 
 	e.Start(":8081")
