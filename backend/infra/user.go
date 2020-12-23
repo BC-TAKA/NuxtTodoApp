@@ -19,7 +19,7 @@ func NewUser(engine *xorm.Engine) repo.User {
 func (u *user) Users() ([]model.User, error) {
 	users := []model.User{}
 
-	if err := u.engine.Find(&users); err != nil {
+	if err := u.engine.Table("todolist").Find(&users); err != nil {
 		log.Println(err)
 		return nil, err
 	}
@@ -30,7 +30,7 @@ func (u *user) User(id int) (*model.User, error) {
 	user := model.User{
 		ID: id,
 	}
-	if err := u.engine.Find(&user); err != nil {
+	if err := u.engine.Table("todolist").Find(&user); err != nil {
 		log.Println(err)
 		return nil, err
 	}
