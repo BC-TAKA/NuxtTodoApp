@@ -19,9 +19,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// ここから下にルーティング記載
-	e := echo.New()
-	e.GET("/todo", handler.Users)
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=true&loc=Asia%%2FTokyo",
 		config.DB.ID, config.DB.Password, config.DB.Host, config.DB.Port, config.DB.DB)
@@ -33,5 +30,9 @@ func main() {
 	userService := service.NewUser(userRepo)
 	h := handler.NewUserHandler(userService)
 
-	e.Start(":8080")
+	// ここから下にルーティング記載
+	e := echo.New()
+	e.GET("/todo", h.Users)
+
+	e.Start(":8081")
 }
