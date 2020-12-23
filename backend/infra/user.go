@@ -38,12 +38,12 @@ func (u *user) User(id int) (*model.User, error) {
 }
 
 // DELETE用
-func (u *user) Delete(id int) error {
-	_, err := u.engine.Table("todolist").ID(id).Delete(id)
+func (u *user) Delete(id int) (int64, error) {
+	req, err := u.engine.Table("todolist").ID(id).Delete(id)
 
 	if err != nil {
 		log.Println(err)
-		return err
+		return 0, err
 	}
-	return nil
+	return req, nil
 }

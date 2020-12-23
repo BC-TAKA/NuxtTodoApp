@@ -9,7 +9,7 @@ type User interface {
 	Users() ([]model.User, error)
 	User(id int) (*model.User, error)
 	// DELETE用
-	Delete(id int) error
+	Delete(id int) (int64, error)
 }
 
 type user struct {
@@ -29,6 +29,6 @@ func (u *user) User(id int) (*model.User, error) {
 }
 
 // DELETE用
-func (u *user) Delete(id int) (err error) {
+func (u *user) Delete(id int) (int64, error) {
 	return u.repo.Delete(id)
 }
