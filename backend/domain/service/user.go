@@ -30,6 +30,5 @@ func (u *user) User(id int) (*model.User, error) {
 
 // DELETE用
 func (u *user) Delete(id int) error {
-	_, err := u.repo.Delete(id)
-	return err
+	return u.repo.Delete(id)
 }
