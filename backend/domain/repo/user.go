@@ -6,5 +6,5 @@ type User interface {
 	Users() ([]model.User, error)
 	User(id int) (*model.User, error)
 	// DELETE用
-	Delete(id int) error
+	DoRemove(id int) error
 }

@@ -61,8 +61,8 @@ func (u *userHandler) Users(c echo.Context) error {
 }
 
 // DELETE用
-func (u *userHandler) Delete(c echo.Context) error {
-	res, err := u.user.Delete(id)
+func (u *userHandler) DoRemove(c echo.Context) error {
+	res, err := u.user.DoRemove(id)
 	if err != nil {
 		log.Println("Delete failed")
 		return c.JSON(http.StatusBadRequest, NewErrorResponse(err))
