@@ -13,6 +13,7 @@ import (
 
 type UserHandler interface {
 	Users(c echo.Context) error
+	DoRemove(c echo.Context) error
 }
 
 type userHandler struct {
@@ -62,10 +63,15 @@ func (u *userHandler) Users(c echo.Context) error {
 
 // DELETE用
 func (u *userHandler) DoRemove(c echo.Context) error {
-	res, err := u.user.DoRemove(id)
+	paramID := c.QueryParam("id")
+	log.Println(paramID)
+
+	id, _ := strconv.Atoi(paramID)
+	log.Println(id)
+	err := u.user.DoRemove(id)
 	if err != nil {
 		log.Println("Delete failed")
 		return c.JSON(http.StatusBadRequest, NewErrorResponse(err))
 	}
-	return c.JSON(http.StatusOK, res)
+	return c.JSON(http.StatusOK, "OK")
 }
