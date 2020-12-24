@@ -39,7 +39,7 @@ func (u *user) User(id int) (*model.User, error) {
 
 // DELETE用
 func (u *user) Delete(id int) error {
-	_, err := u.engine.Table("todolist").ID(id).Delete(id)
+	_, err := u.engine.Table("todolist").Where("id = ?", id).Delete()
 	if err != nil {
 		log.Println(err)
 		return err
