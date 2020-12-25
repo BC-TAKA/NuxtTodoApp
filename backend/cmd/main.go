@@ -41,7 +41,7 @@ func main() {
 
 	// ここから下にルーティング記載
 	e.GET("/todos", h.Users)
-	e.DELETE("/todos/:id", h.DoRemove)
+	e.DELETE("/todos/:ID", h.DoRemove)
 
 	e.Start(":8081")
 }

@@ -63,11 +63,9 @@ func (u *userHandler) Users(c echo.Context) error {
 
 // DELETE用
 func (u *userHandler) DoRemove(c echo.Context) error {
-	paramID := c.QueryParam("id")
-	log.Println(paramID)
+	paramID := c.Param("ID")
 
 	id, _ := strconv.Atoi(paramID)
-	log.Println(id)
 	err := u.user.DoRemove(id)
 	if err != nil {
 		log.Println("Delete failed")

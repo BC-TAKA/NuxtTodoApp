@@ -158,7 +158,7 @@ export default Vue.extend ({
     },
     //削除機能
     doRemove(ID: number) {
-        axios.delete(`http://localhost:8081/todos?id=${ID}`)
+        axios.delete('http://localhost:8081/todos/'+ ID)
         .then((response: any) => {
             this.getTODOs()
         }).catch((error: any) => {
