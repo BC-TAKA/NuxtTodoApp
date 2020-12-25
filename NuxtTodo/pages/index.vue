@@ -41,7 +41,7 @@
                 ID
                 <v-text-field
                   label="IDを入力"
-                  v-model="updateTodoForm.id"
+                  v-model="update_id"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="4">
@@ -115,6 +115,7 @@ interface TodoType {
 export default Vue.extend ({
   data() {
     return {
+      update_id: '',
       todos: [] as TodoType[],
       createTodoForm: {} as TodoType,
       updateTodoForm: {} as TodoType,
@@ -139,6 +140,7 @@ export default Vue.extend ({
         axios.post('http://localhost:8081/todos', this.createTodoForm)
         .then((response: any) => {
             alert("登録完了しました。")
+            console.log(this.createTodoForm)
             this.getTODOs()
             this.createTodoForm = {} as TodoType
         }).catch((error: any) => {
@@ -147,6 +149,7 @@ export default Vue.extend ({
     },
     //更新機能
     doUpdate() {
+        this.updateTodoForm.id = Number(this.update_id)
         axios.put('http://localhost:8081/todos', this.updateTodoForm)
         .then((response: any) => {
             alert("更新が完了しました。")

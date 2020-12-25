@@ -51,6 +51,20 @@ func (u *user) DoAdd(name string, todo string) error {
 	return nil
 }
 
+// UPDATE用
+func (u *user) DoUpdate(id int, name string, todo string) error {
+	user := model.User{
+		Name: name,
+		Todo: todo,
+	}
+	_, err := u.engine.Table("todolist").Where("id = ?", id).Update(&user)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
+
 // DELETE用
 func (u *user) DoRemove(id int) error {
 	user := model.User{

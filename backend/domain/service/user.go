@@ -10,6 +10,8 @@ type User interface {
 	User(id int) (*model.User, error)
 	// INSERT用
 	DoAdd(name string, todo string) error
+	// UPDATE用
+	DoUpdate(id int, name string, todo string) error
 	// DELETE用
 	DoRemove(id int) error
 }
@@ -33,6 +35,11 @@ func (u *user) User(id int) (*model.User, error) {
 // INSERT用
 func (u *user) DoAdd(name string, todo string) error {
 	return u.repo.DoAdd(name, todo)
+}
+
+// UPDATE用
+func (u *user) DoUpdate(id int, name string, todo string) error {
+	return u.repo.DoUpdate(id, name, todo)
 }
 
 // DELETE用
