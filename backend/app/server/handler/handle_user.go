@@ -13,6 +13,7 @@ import (
 
 type UserHandler interface {
 	Users(c echo.Context) error
+	DoAdd(c echo.Context) error
 	DoRemove(c echo.Context) error
 }
 
@@ -22,6 +23,11 @@ type userHandler struct {
 
 type ErrorResponse struct {
 	Message string `xorm:"message"`
+}
+
+type InsertParams struct {
+	name string `xorm:"name"`
+	todo string `xorm:"todo"`
 }
 
 func NewErrorResponse(err error) ErrorResponse {
@@ -61,6 +67,17 @@ func (u *userHandler) Users(c echo.Context) error {
 	return c.JSON(http.StatusOK, user)
 }
 
+// INSERT用
+func (u *userHandler) DoAdd(c echo.Context) error {
+	params := new([]InsertParams)
+	log.Println(params)
+	if err := c.Bind(params); err != nil {
+		log.Println("INSERT failed")
+		return c.JSON(http.StatusBadRequest, NewErrorResponse(err))
+	}
+	return c.JSON(http.StatusOK, "INSERT OK")
+}
+
 // DELETE用
 func (u *userHandler) DoRemove(c echo.Context) error {
 	paramID := c.Param("ID")
@@ -71,5 +88,5 @@ func (u *userHandler) DoRemove(c echo.Context) error {
 		log.Println("Delete failed")
 		return c.JSON(http.StatusBadRequest, NewErrorResponse(err))
 	}
-	return c.JSON(http.StatusOK, "OK")
+	return c.JSON(http.StatusOK, "DELETE OK")
 }
