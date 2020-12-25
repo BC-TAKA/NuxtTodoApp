@@ -25,10 +25,10 @@ type ErrorResponse struct {
 	Message string `xorm:"message"`
 }
 
-type InsertParams struct {
-	name string `xorm:"name"`
-	todo string `xorm:"todo"`
-}
+// type InsertParams struct {
+// 	name string `xorm:"name"`
+// 	todo string `xorm:"todo"`
+// }
 
 func NewErrorResponse(err error) ErrorResponse {
 	return ErrorResponse{
@@ -69,8 +69,9 @@ func (u *userHandler) Users(c echo.Context) error {
 
 // INSERT用
 func (u *userHandler) DoAdd(c echo.Context) error {
-	params := new([]InsertParams)
+	params := new(InsertParams)
 	log.Println(params)
+
 	if err := c.Bind(params); err != nil {
 		log.Println("INSERT failed")
 		return c.JSON(http.StatusBadRequest, NewErrorResponse(err))
